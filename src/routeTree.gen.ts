@@ -10,32 +10,42 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as charactersIndexRouteImport } from './routes/(characters)/index'
+import { Route as charactersCharacterIdRouteImport } from './routes/(characters)/$characterId'
 
 const charactersIndexRoute = charactersIndexRouteImport.update({
   id: '/(characters)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const charactersCharacterIdRoute = charactersCharacterIdRouteImport.update({
+  id: '/(characters)/$characterId',
+  path: '/$characterId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/$characterId': typeof charactersCharacterIdRoute
   '/': typeof charactersIndexRoute
 }
 export interface FileRoutesByTo {
+  '/$characterId': typeof charactersCharacterIdRoute
   '/': typeof charactersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/(characters)/$characterId': typeof charactersCharacterIdRoute
   '/(characters)/': typeof charactersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/$characterId' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/(characters)/'
+  to: '/$characterId' | '/'
+  id: '__root__' | '/(characters)/$characterId' | '/(characters)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  charactersCharacterIdRoute: typeof charactersCharacterIdRoute
   charactersIndexRoute: typeof charactersIndexRoute
 }
 
@@ -48,10 +58,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof charactersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(characters)/$characterId': {
+      id: '/(characters)/$characterId'
+      path: '/$characterId'
+      fullPath: '/$characterId'
+      preLoaderRoute: typeof charactersCharacterIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
+  charactersCharacterIdRoute: charactersCharacterIdRoute,
   charactersIndexRoute: charactersIndexRoute,
 }
 export const routeTree = rootRouteImport

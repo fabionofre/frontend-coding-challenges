@@ -15,15 +15,22 @@ export const Toolbar = () => {
     }
   };
 
+  const handleBack = () => {
+    // On a deep link (e.g. opening a character URL directly) there is no in-app
+    // history to pop, so going "back" would leave the app. Fall back to the list.
+    if (router.history.length > 1) {
+      router.history.back();
+    } else {
+      router.navigate({ to: "/" });
+    }
+  };
+
   return (
     <div className="flex items-center justify-between bg-amber-900/15 p-4">
       <div className="flex flex-1 items-center">
         <div className="mr-4 flex w-8 items-center justify-center">
           {!isRootRoute && (
-            <button
-              onClick={() => router.history.back()}
-              className="text-amber-200 hover:text-amber-100"
-            >
+            <button onClick={handleBack} className="text-amber-200 hover:text-amber-100">
               <ArrowLeft size={20} />
             </button>
           )}
