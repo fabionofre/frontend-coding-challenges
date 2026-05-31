@@ -1,5 +1,7 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { CharacterDetail } from "./CharacterDetail";
+import { useAppStore } from "@lib/hooks/useAppStore";
 import { mockCharacter } from "../../../test/mocks";
 
 describe("CharacterDetail", () => {
@@ -20,7 +22,9 @@ describe("CharacterDetail", () => {
   });
 
   it("derives wizard status from gender", () => {
-    render(<CharacterDetail character={{ id: "1", name: "Harry", wizard: true, gender: "male" }} />);
+    render(
+      <CharacterDetail character={{ id: "1", name: "Harry", wizard: true, gender: "male" }} />
+    );
     expect(screen.getByText("Wizard")).toBeInTheDocument();
   });
 
@@ -48,5 +52,42 @@ describe("CharacterDetail", () => {
   it("omits the alternate actors row when there are none", () => {
     render(<CharacterDetail character={mockCharacter} />); // alternate_actors: []
     expect(screen.queryByText("Alternate Actors")).not.toBeInTheDocument();
+  });
+
+  it("renders the remaining Basic Information fields", () => {
+    render(<CharacterDetail character={mockCharacter} />);
+    expect(screen.getByText("male")).toBeInTheDocument(); // gender
+    expect(screen.getByText("green")).toBeInTheDocument(); // eye colour
+    expect(screen.getByText("black")).toBeInTheDocument(); // hair colour
+  });
+
+  it("renders the 'Also known as' aliases", () => {
+    render(<CharacterDetail character={mockCharacter} />);
+    expect(
+      screen.getByText(/Also known as: The Boy Who Lived, The Chosen One/)
+    ).toBeInTheDocument();
+  });
+
+  it("lists alternate actors when present", () => {
+    render(
+      <CharacterDetail
+        character={{ ...mockCharacter, alternate_actors: ["Toby Papworth", "Kit Connor"] }}
+      />
+    );
+    expect(screen.getByText("Alternate Actors")).toBeInTheDocument();
+    expect(screen.getByText("Toby Papworth, Kit Connor")).toBeInTheDocument();
+  });
+
+  it("toggles the favorite state from the detail page", async () => {
+    useAppStore.setState({ favorites: [] });
+    render(<CharacterDetail character={mockCharacter} />);
+
+    const star = screen.getByRole("button", { name: /add harry potter to favorites/i });
+    await userEvent.click(star);
+
+    expect(useAppStore.getState().favorites).toContain("1");
+    expect(
+      screen.getByRole("button", { name: /remove harry potter from favorites/i })
+    ).toBeInTheDocument();
   });
 });
