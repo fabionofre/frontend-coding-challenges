@@ -1,9 +1,10 @@
 import { Spinner } from "@lib/components/Spinner";
+import { FilterOption } from "@lib/constants/filters";
 import { CharacterCard } from "./CharacterCard";
 import { useCharacters } from "../-hooks/useCharacters";
 
-export const CharactersGrid = () => {
-  const { characters, isLoading, isError } = useCharacters();
+export const CharactersGrid = ({ filter }: { filter: FilterOption }) => {
+  const { characters, isLoading, isError } = useCharacters(filter);
 
   if (isLoading) {
     return (
