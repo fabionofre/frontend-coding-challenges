@@ -26,24 +26,25 @@ export const Toolbar = () => {
   };
 
   return (
-    <div className="flex items-center justify-between bg-amber-900/15 p-4">
+    // Figma "Frame 1": row, h≈60px, padding 16px 32px, gradient #160F12 → #2E1C15, gold text.
+    <div className="flex h-15 items-center justify-between bg-linear-to-r from-[#160f12] to-[#2e1c15] px-8">
       <div className="flex flex-1 items-center">
         <div className="mr-4 flex w-8 items-center justify-center">
           {!isRootRoute && (
-            <button onClick={handleBack} className="text-amber-200 hover:text-amber-100">
+            <button onClick={handleBack} className="text-gold hover:text-gold/80">
               <ArrowLeft size={20} />
             </button>
           )}
         </div>
-        <h1 className="text-xl font-medium text-amber-200">The Harry Potter App</h1>
+        <h1 className="font-decorative text-gold text-xl tracking-tight">The Harry Potter App</h1>
       </div>
 
       <button
         onClick={handleHouseSelection}
-        className="flex items-center gap-2 pr-9 text-amber-200 hover:text-amber-100"
+        className="font-decorative text-gold hover:text-gold/80 flex items-center gap-2 tracking-tight"
         aria-label="Change house selection"
       >
-        <span className="text-sm font-medium">Change House</span>
+        <span className="text-xl">CHANGE HOUSE</span>
         <Shield size={20} />
       </button>
     </div>

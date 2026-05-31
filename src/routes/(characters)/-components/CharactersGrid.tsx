@@ -17,8 +17,8 @@ export const CharactersGrid = ({ filter }: { filter: FilterOption }) => {
   if (isError) {
     return (
       <div className="flex flex-col items-center gap-4 py-20 text-center">
-        <p className="text-lg text-amber-200/60">Something went wrong while fetching characters.</p>
-        <p className="text-sm text-amber-200/30">Please try again later.</p>
+        <p className="text-parchment/60 text-lg">Something went wrong while fetching characters.</p>
+        <p className="text-parchment/30 text-sm">Please try again later.</p>
       </div>
     );
   }
@@ -26,19 +26,19 @@ export const CharactersGrid = ({ filter }: { filter: FilterOption }) => {
   if (characters.length === 0) {
     return (
       <div className="flex flex-col items-center gap-2 py-20 text-center">
-        <p className="text-lg text-amber-200/60">No characters found.</p>
-        <p className="text-sm text-amber-200/30">Try adjusting your filters or search query.</p>
+        <p className="text-parchment/60 text-lg">No characters found.</p>
       </div>
     );
   }
 
+  // Figma grid: 250px cards, 20px gap, 60px side padding. Wrap + center each row.
   return (
-    <div className="container mx-auto grid w-min grid-cols-[repeat(auto-fill,minmax(200px,max-content))] gap-4">
+    <div className="flex w-full flex-wrap gap-5 px-4 pb-5 sm:px-15">
       {characters.map((character) => (
         <CharacterCard
           key={character.id}
           character={character}
-          className="transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+          className="transition-transform duration-300 hover:scale-105"
         />
       ))}
     </div>

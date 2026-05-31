@@ -1,16 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Roboto+Mono:wght@400;500&display=swap");
 @import "tailwindcss";
 
+/* Figma palette (HP Code Challenge). */
 .dark,
 :root {
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.9 0.05 85.9);
+  --background: #09090b; /* card / surface */
+  --foreground: #f1dbb5; /* parchment — primary text */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-decorative: "Cinzel Decorative", "sans-serif";
+
+  /* Semantic colors lifted straight from the Figma tokens. */
+  --color-parchment: #f1dbb5; /* primary text, values, titles */
+  --color-gold: #ffe574; /* app/header title */
+  --color-surface: #09090b; /* info card background */
+  --color-muted: #53524f; /* field labels */
+  --color-faint: #5c5a56; /* "Also known as" caption */
+  --color-tabbar: #211513; /* filter tab-bar container */
+  --color-tab-active: #905500; /* active filter tab */
+  --color-tab-active-foreground: #fffbe8; /* active filter tab label */
+
+  --font-decorative: "Cinzel Decorative", serif;
+  --font-serif: "Cinzel", serif;
+  --font-mono: "Roboto Mono", monospace;
 }
 
 @layer base {
@@ -18,10 +32,11 @@
     @apply border-gray-200 dark:border-gray-800;
   }
   body {
-    @apply bg-linear-to-br from-gray-950 via-stone-900 to-amber-950;
+    /* Figma page background: linear-gradient(135deg, #090D16 0%, #1A1817 39%, #35190D 100%). */
+    background: linear-gradient(135deg, #090d16 0%, #1a1817 39%, #35190d 100%) fixed;
     @apply min-h-screen;
     @apply font-decorative;
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
 

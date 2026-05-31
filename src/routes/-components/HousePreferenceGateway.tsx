@@ -17,21 +17,25 @@ export const HousePreferenceGateway = ({ children }: HousePreferenceGatewayProps
   // is falsy for `null` too, so clicking "Show all characters" set the state to `null`
   // and then immediately re-rendered the selection screen — the button could never be
   // used. Check explicitly against `undefined` so `null` passes through.
-  if (preferredHouse !== undefined) return <>{children}</>; // BUG #2
+  if (preferredHouse !== undefined) return <>{children}</>;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-8 pt-30">
-      <h1 className="text-center text-3xl tracking-widest font-stretch-extra-expanded">
+    // Figma "Home": column, centered, title → houses row (gap 32px) → CTA.
+    <div className="my-auto flex flex-col items-center gap-12">
+      <h1 className="text-parchment text-center text-4xl tracking-wide">
         Choose your preferred house
       </h1>
 
-      <div className="flex flex-wrap items-center justify-evenly gap-12">
+      <div className="flex flex-wrap items-center justify-evenly gap-8">
         {houses.map((house) => (
           <HouseCard key={house} house={house} onClick={setPreferredHouse} />
         ))}
       </div>
 
-      <Button onClick={() => setPreferredHouse(null)} className="self-center text-lg">
+      <Button
+        onClick={() => setPreferredHouse(null)}
+        className="text-parchment h-auto px-4 py-2 font-serif text-2xl"
+      >
         Show all characters
       </Button>
     </div>
